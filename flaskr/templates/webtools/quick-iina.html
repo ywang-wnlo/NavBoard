@@ -18,7 +18,13 @@
           {% if real_url %}
           <label class="label">实际 URL</label>
           <textarea class="textarea" readonly>{{ real_url }}</textarea>
+          {% elif iina_cmdline %}
+          <label class="label">iina-cli 命令行</label>
+          <textarea class="textarea" readonly>{{ iina_cmdline }}</textarea>
           {% else %}
+          <label class="label">Header</label>
+          <textarea class="textarea" name="ext_headers"></textarea>
+          <br>
           <label class="label">URL</label>
           <textarea class="textarea" name="input_url" required></textarea>
           {% endif %}
@@ -29,6 +35,8 @@
             <button class="button is-success" type="button" onclick="copyToClipboard('{{ real_url }}')">复制</button>
             <button class="button is-link" type="button"
               onclick="window.location.href='iina://weblink?url={{ real_url }}'">快速打开</button>
+            {% elif iina_cmdline %}
+            <button class="button is-success" type="button" onclick="copyToClipboard('{{ iina_cmdline }}')">复制</button>
             {% else %}
             <button class="button is-primary" type="submit">提交</button>
             {% endif %}

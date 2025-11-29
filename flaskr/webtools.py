@@ -17,17 +17,14 @@ def decode_real_url(url):
             curr = prefix + curr.split(prefix)[-1] 
     return curr
 
-def make_iina_output(value):
-    """处理输入的 URL，返回解码后的结果或错误提示"""
-    if value.startswith("http://") or value.startswith("https://"):
-        return decode_real_url(value)
-    return "不是有效的 URL"
-
 @bp.route("/quick-iina", methods=("GET", "POST"))
 def quick_iina():
-    """无需登录即可访问的 quick-iina 页面，提供一个输入框和按钮。"""
-    result = None
+    """无需登录即可访问的 quick-iina 页面，根据实际 method 处理请求"""
+    real_url = None
     if request.method == "POST":
-        value = request.form.get("iina_input")
-        result = make_iina_output(value)
-    return render_template("webtools/quick-iina.html", iina_output=result)
+        input_url = request.form.get("input_url")
+        if input_url.startswith("http://") or input_url.startswith("https://"):
+            real_url = decode_real_url(input_url)
+        else:
+            real_url = "不是有效的 URL"
+    return render_template("webtools/quick-iina.html", real_url=real_url)

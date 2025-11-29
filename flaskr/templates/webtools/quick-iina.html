@@ -15,20 +15,20 @@
       <h1 class="title">Quick IINA</h1>
       <form class="box" method="post">
         <div class="field">
-          {% if iina_output %}
+          {% if real_url %}
           <label class="label">实际 URL</label>
-          <textarea class="textarea" readonly>{{ iina_output }}</textarea>
+          <textarea class="textarea" readonly>{{ real_url }}</textarea>
           {% else %}
           <label class="label">URL</label>
-          <textarea class="textarea" name="iina_input" required></textarea>
+          <textarea class="textarea" name="input_url" required></textarea>
           {% endif %}
         </div>
         <div class="field is-grouped is-grouped-right">
           <p class="control">
-            {% if iina_output %}
-            <button class="button is-success" type="button" onclick="copyToClipboard('{{ iina_output }}')">复制</button>
+            {% if real_url %}
+            <button class="button is-success" type="button" onclick="copyToClipboard('{{ real_url }}')">复制</button>
             <button class="button is-link" type="button"
-              onclick="window.location.href='iina://weblink?url={{ iina_output }}'">快速打开</button>
+              onclick="window.location.href='iina://weblink?url={{ real_url }}'">快速打开</button>
             {% else %}
             <button class="button is-primary" type="submit">提交</button>
             {% endif %}

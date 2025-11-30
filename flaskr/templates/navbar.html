@@ -14,7 +14,13 @@
   <div class="navbar-menu" id="navMenu">
     <div class="navbar-start">
       <a class="navbar-item" href="{{ url_for('index') }}">导航</a>
-      <a class="navbar-item" href="{{ url_for('webtools.quick_iina') }}">工具箱</a>
+
+      <div class="navbar-item has-dropdown is-hoverable">
+        <a class="navbar-link">工具集</a>
+        <div class="navbar-dropdown">
+          <a class="navbar-item" href="{{ url_for('webtools.quick_iina') }}">Quick IINA</a>
+        </div>
+      </div>
     </div>
     <div class="navbar-end">
       <div class="navbar-item">

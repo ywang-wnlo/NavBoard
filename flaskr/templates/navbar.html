@@ -1,10 +1,17 @@
 <nav class="navbar" role="navigation" aria-label="main navigation">
-  <div class="navbar-menu">
-    <div class="navbar-brand">
-      <a class="navbar-item" href="{{ url_for('index') }}">
-        <img src="{{ url_for('static', filename='favicon.ico') }}">
-      </a>
-    </div>
+  <div class="navbar-brand">
+    <a class="navbar-item" href="{{ url_for('index') }}">
+      <img src="{{ url_for('static', filename='favicon.ico') }}">
+    </a>
+    <a role="button" class="navbar-burger" data-target="navMenu" aria-label="menu" aria-expanded="false">
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+    </a>
+  </div>
+
+  <div class="navbar-menu" id="navMenu">
     <div class="navbar-start">
       <a class="navbar-item" href="{{ url_for('index') }}">导航</a>
       <a class="navbar-item" href="{{ url_for('webtools.quick_iina') }}">工具箱</a>
@@ -19,3 +26,17 @@
     </div>
   </div>
 </nav>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  const $navbarBurgers = Array.prototype.slice.call(document.querySelectorAll('.navbar-burger'), 0);
+  $navbarBurgers.forEach( el => {
+    el.addEventListener('click', () => {
+      const target = el.dataset.target;
+      const $target = document.getElementById(target);
+      el.classList.toggle('is-active');
+      $target.classList.toggle('is-active');
+    });
+  });
+});
+</script>

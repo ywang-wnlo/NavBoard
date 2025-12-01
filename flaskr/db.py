@@ -52,7 +52,17 @@ def init_db_command():
     create_user(_user, _pwd)
 
 
+@click.command("add-user")
+def add_user_command():
+    """添加新用户"""
+    click.echo("开始创建账户")
+    _user = input("用户名: ")
+    _pwd = getpass("密码: ")
+    create_user(_user, _pwd)
+
+
 def init_app(app):
     """将数据库相关函数注册到 Flask 应用"""
     app.teardown_appcontext(close_db)
     app.cli.add_command(init_db_command)
+    app.cli.add_command(add_user_command)

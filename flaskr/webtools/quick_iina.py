@@ -1,7 +1,7 @@
 from flask import Blueprint, render_template, request
 from urllib.parse import unquote
 
-bp = Blueprint("webtools", __name__, template_folder="webtools")
+bp = Blueprint("quick_iina", __name__, template_folder="webtools")
 
 def decode_real_url(url):
     """解码 URL，去除可能的编码字符"""
@@ -14,7 +14,7 @@ def decode_real_url(url):
     http_prefixes = ["http://", "https://"]
     for prefix in http_prefixes:
         if prefix in curr:
-            curr = prefix + curr.split(prefix)[-1] 
+            curr = prefix + curr.split(prefix)[-1]
     return curr
 
 def gen_iina_cmdline(url, ext_headers):
@@ -29,7 +29,7 @@ def gen_iina_cmdline(url, ext_headers):
     return iina_cmdline
 
 @bp.route("/quick-iina", methods=("GET", "POST"))
-def quick_iina():
+def index():
     """无需登录即可访问的 quick-iina 页面，根据实际 method 处理请求"""
     real_url = None
     iina_cmdline = None

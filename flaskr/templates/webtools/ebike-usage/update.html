@@ -18,6 +18,30 @@
           <input class="button is-danger" type="submit" value="删除" onclick="return confirm('确认删除?');">
         </form>
       </div>
+      <div class="table-container">
+        <table class="table is-bordered is-fullwidth">
+          <tbody>
+            <tr>
+              <td>航天城</td>
+              <td>腾讯</td>
+              <td>5.2 公里</td>
+              <td>快速填充</td>
+            </tr>
+            <tr>
+              <td>航天城</td>
+              <td>U 悦</td>
+              <td>1.9 公里</td>
+              <td>快速填充</td>
+            </tr>
+            <tr>
+              <td>航天城</td>
+              <td>青棠湾</td>
+              <td>2.6 公里</td>
+              <td>快速填充</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
       <div>
         <form class="box" method="post">
           <div class="field has-addons">
@@ -61,6 +85,36 @@
       </div>
     </div>
   </section>
+  <script>
+    // 快速填充功能
+    document.addEventListener('DOMContentLoaded', function() {
+      const quickFillLinks = document.querySelectorAll('td:last-child');
+      const usageInput = document.getElementById('usage');
+      // 为每个快速填充链接添加点击事件
+      quickFillLinks.forEach(link => {
+        if (link.textContent === '快速填充') {
+          link.style.cursor = 'pointer';
+          link.style.color = '#3273dc'
+          link.style.textDecoration = 'underline';
+          link.addEventListener('click', function() {
+            // 获取同一行中的公里数
+            const row = this.closest('tr');
+            const distanceCell = row.cells[2];
+            const distanceText = distanceCell.textContent.trim();
+            // 提取数字部分（去掉"公里"文字）
+            const distance = distanceText.replace('公里', '').trim();
+            // 填入input框
+            usageInput.value = distance;
+            // 给用户一些视觉反馈
+            this.style.color = '#23d160';
+            setTimeout(() => {
+              this.style.color = '#3273dc';
+            }, 200);
+          });
+        }
+      });
+    });
+  </script>
 </body>
 
 </html>

@@ -4,6 +4,7 @@
 DROP TABLE IF EXISTS user;
 DROP TABLE IF EXISTS gmap;
 DROP TABLE IF EXISTS nav_entry;
+DROP TABLE IF EXISTS ebike_entry;
 
 CREATE TABLE user (
   id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -24,5 +25,14 @@ CREATE TABLE nav_entry (
   url TEXT NOT NULL,
   local_ip TEXT,
   port INTEGER,
+  FOREIGN KEY (author_id) REFERENCES user (id)
+);
+
+CREATE TABLE ebike_entry (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  author_id INTEGER NOT NULL,
+  ext TEXT,
+  date TEXT NOT NULL,
+  usage INTEGER NOT NULL,
   FOREIGN KEY (author_id) REFERENCES user (id)
 );

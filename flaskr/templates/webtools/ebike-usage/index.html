@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>小电驴续航记录</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.4/css/bulma.min.css">
+</head>
+
+<body>
+  {% include 'navbar.html' %}
+  <section class="section">
+    <div class="container is-max-tablet">
+      <div class="is-clearfix">
+        <h1 class="title" style="float: left;">小电驴续航记录</h1>
+        <a class="button is-primary" href="{{ url_for('ebike_usage.create') }}" style="float: right;">添加</a>
+      </div>
+      <div>
+        {% for ebike_entry in ebike_entrys %}
+        <article class="message">
+          <div class="message-body">
+            <span>{{ ebike_entry['date'] }}</span>
+            <span>
+              {% if ebike_entry['usage'] == 0 %}
+              充电了！
+              {% else %}
+              <code>{{ ebike_entry['ext'] }}</code>
+              骑行 {{ ebike_entry['usage'] }} 公里
+              {% endif %}
+            </span>
+            <a class="button is-small" href="{{ url_for('ebike_usage.update', id=ebike_entry['id']) }}" style="float: right;">修改</a>
+          </div>
+        </article>
+        {% endfor %}
+      </div>
+    </div>
+  </section>
+</body>
+
+</html>

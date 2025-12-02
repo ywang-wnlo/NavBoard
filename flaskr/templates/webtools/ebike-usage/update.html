@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>修改</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.4/css/bulma.min.css">
+</head>
+
+<body>
+  {% include 'navbar.html' %}
+  <section class="section">
+    <div class="container is-max-tablet">
+      <div class="is-clearfix">
+        <h1 class="title" style="float: left;">修改</h1>
+        <form action="{{ url_for('ebike_usage.delete', id=ebike_entry['id']) }}" method="post" style="float: right;">
+          <input class="button is-danger" type="submit" value="删除" onclick="return confirm('确认删除?');">
+        </form>
+      </div>
+      <div>
+        <form class="box" method="post">
+          <div class="field has-addons">
+            <p class="control">
+              <span class="select">
+                <select name="ext" id="ext">
+                  <option {% if (request.form['ext'] or ebike_entry['ext']) == '单人' %}selected{% endif %}>单人</option>
+                  <option {% if (request.form['ext'] or ebike_entry['ext']) == '双人' %}selected{% endif %}>双人</option>
+                </select>
+              </span>
+            </p>
+            <p class="control">
+              <span class="select">
+                <select name="date" id="date">
+                  <option {% if (request.form['date'] or ebike_entry['date']) == '周一' %}selected{% endif %}>周一</option>
+                  <option {% if (request.form['date'] or ebike_entry['date']) == '周二' %}selected{% endif %}>周二</option>
+                  <option {% if (request.form['date'] or ebike_entry['date']) == '周三' %}selected{% endif %}>周三</option>
+                  <option {% if (request.form['date'] or ebike_entry['date']) == '周四' %}selected{% endif %}>周四</option>
+                  <option {% if (request.form['date'] or ebike_entry['date']) == '周五' %}selected{% endif %}>周五</option>
+                  <option {% if (request.form['date'] or ebike_entry['date']) == '周六' %}selected{% endif %}>周六</option>
+                  <option {% if (request.form['date'] or ebike_entry['date']) == '周日' %}selected{% endif %}>周日</option>
+                </select>
+              </span>
+            </p>
+            <p class="control is-expanded">
+              <input class="input" type="text" name="usage" id="usage" value="{{ request.form['usage'] or ebike_entry['usage'] }}"
+                placeholder="骑行公里数，充电填 0" required>
+            </p>
+          </div>
+          {% for message in get_flashed_messages() %}
+          <div class="notification is-danger">
+            {{ message }}
+          </div>
+          {% endfor %}
+          <div class="field is-grouped is-grouped-right">
+            <p class="control">
+              <button class="button is-primary" type="submit">保存</button>
+            </p>
+          </div>
+        </form>
+      </div>
+    </div>
+  </section>
+</body>
+
+</html>

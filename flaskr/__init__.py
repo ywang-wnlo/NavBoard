@@ -31,11 +31,12 @@ def create_app():
     from . import auth
     from . import navboard
     from .webtools import quick_iina
-
+    from .webtools import ebike_usage
 
     app.register_blueprint(auth.bp)
     app.register_blueprint(navboard.bp)
     app.register_blueprint(quick_iina.bp)
+    app.register_blueprint(ebike_usage.bp)
 
     # 让 url_for('index') 等价于 url_for('navboard.index')
     # 本项目直接将 navboard 作为主页面

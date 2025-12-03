@@ -26,7 +26,19 @@
           </div>
           <div class="field">
             <label class="label">链接</label>
-            <input class="input" type="text" name="url" id="url" value="{{ request.form['url'] or nav_entry['url'] }}" required />
+            <div class="field has-addons">
+              <p class="control">
+                <span class="select">
+                  <select name="protocol" id="protocol">
+                    <option {% if (request.form['protocol'] or nav_entry['protocol']) == 'https://' %}selected{% endif %}>https://</option>
+                    <option {% if (request.form['protocol'] or nav_entry['protocol']) == 'http://' %}selected{% endif %}>http://</option>
+                  </select>
+                </span>
+              </p>
+              <p class="control is-expanded">
+                <input class="input" type="text" name="url" id="url" value="{{ request.form['url'] or nav_entry['url'] }}" required />
+              </p>
+            </div>
           </div>
           <div class="field">
             <label class="label">端口</label>

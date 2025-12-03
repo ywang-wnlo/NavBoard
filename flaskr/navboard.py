@@ -63,7 +63,7 @@ def index():
     """展示所有导航条目（nav_entry），按 url 排序"""
     db = get_db()
     nav_entrys = db.execute(
-        "SELECT id, title, url, port, local_ip, author_id"
+        "SELECT id, title, protocol, url, port, local_ip, author_id"
         " FROM nav_entry ORDER BY url ASC"
     ).fetchall()
     g.wan_ip = get_wan_ip()
@@ -92,11 +92,6 @@ def get_nav_entry(id):
     return nav_entry
 
 
-def valid_url(url) -> bool:
-    """校验链接格式是否为 http(s):// 开头"""
-    return url.startswith("http://") or url.startswith("https://")
-
-
 @bp.route("/create", methods=("GET", "POST"))
 @login_required
 def create():
@@ -107,23 +102,14 @@ def create():
         url = request.form["url"]
         port = request.form["port"]
         local_ip = request.form["local_ip"]
-        error = None
 
-        if not url:
-            error = "必须输入链接"
-        elif not title:
-            error = "必须输入标题"
-
-        if error is not None:
-            flash(error)
-        else:
-            db = get_db()
-            db.execute(
-                "INSERT INTO nav_entry (title, url, port, local_ip, author_id) VALUES (?, ?, ?, ?, ?)",
-                (title, protocol + url, port, local_ip, g.user["id"]),
-            )
-            db.commit()
-            return redirect(url_for("navboard.index"))
+        db = get_db()
+        db.execute(
+            "INSERT INTO nav_entry (title, protocol, url, port, local_ip, author_id) VALUES (?, ?, ?, ?, ?, ?)",
+            (title, protocol, url, port, local_ip, g.user["id"]),
+        )
+        db.commit()
+        return redirect(url_for("navboard.index"))
 
     return render_template("navboard/create.html")
 
@@ -136,28 +122,18 @@ def update(id):
 
     if request.method == "POST":
         title = request.form["title"]
+        protocol = request.form["protocol"]
         url = request.form["url"]
         port = request.form["port"]
         local_ip = request.form["local_ip"]
-        error = None
 
-        if not url:
-            error = "必须输入链接"
-        elif not valid_url(url):
-            error = "链接格式不正确，必须包含 http(s)://"
-        elif not title:
-            error = "必须输入标题"
-
-        if error is not None:
-            flash(error)
-        else:
-            db = get_db()
-            db.execute(
-                "UPDATE nav_entry SET title = ?, url = ? , port = ?, local_ip = ? WHERE id = ?",
-                (title, url, port, local_ip, id)
-            )
-            db.commit()
-            return redirect(url_for("navboard.index"))
+        db = get_db()
+        db.execute(
+            "UPDATE nav_entry SET title = ?, protocol = ?, url = ? , port = ?, local_ip = ? WHERE id = ?",
+            (title, protocol, url, port, local_ip, id)
+        )
+        db.commit()
+        return redirect(url_for("navboard.index"))
 
     return render_template("navboard/update.html", nav_entry=nav_entry)
 

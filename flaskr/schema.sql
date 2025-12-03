@@ -21,6 +21,7 @@ CREATE TABLE nav_entry (
   id INTEGER PRIMARY KEY AUTOINCREMENT,
   author_id INTEGER NOT NULL,
   title TEXT NOT NULL,
+  protocol TEXT NOT NULL,
   url TEXT NOT NULL,
   local_ip TEXT,
   port INTEGER,

@@ -32,7 +32,7 @@
           </div>
           <div class="message-body">
             <p>域名访问：
-              <a href="{{ nav_entry['url'] }}" target="_blank" rel="noreferrer">{{ nav_entry['url'] }}</a>
+              <a href="{{ nav_entry['protocol'] }}{{ nav_entry['url'] }}" target="_blank" rel="noreferrer">{{ nav_entry['protocol'] }}{{ nav_entry['url'] }}</a>
             </p>
             {% if g.wan_ip and nav_entry['port'] %}
             <p>IP 直连：
